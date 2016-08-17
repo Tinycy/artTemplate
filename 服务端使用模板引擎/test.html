@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>服务端模板化</title>
+	</head>
+	<body>
+		
+		<script id="books" type="text/html">
+			<li>
+				<p>{{name}}</p>
+				
+				<img src={{img}} onerror="alert('图片加载失败')"/>
+				<blockquote>{{description}}</blockquote>
+				
+			</li>
+			
+		</script>
+		
+		<script id="websit" type="text/html">
+			<li>
+				<a href={{url}}>{{name}}</a>
+				
+				<blockquote>{{description}}</blockquote>
+			</li>
+			
+		</script>
+		
+		
+			{{if list.length <= 0}}
+			
+				<h4>没有推荐内容</h4>
+			
+			{{else}}
+			
+			<section>
+				<h4>{{title}}</h4>
+				<ul>
+					
+					{{each list as value}}
+					
+						{{if value.type == 'book'}}
+						
+						 {{include 'books' value}}
+						
+						  
+						{{else}}
+						
+						   {{include 'websit' value}}
+						  
+						   
+						{{/if}}  
+						
+					{{/each}}
+				</ul>
+			</section>
+			
+			{{/if}}
+	</body>
+</html>

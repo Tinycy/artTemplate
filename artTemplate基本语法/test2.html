@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>artTemplate</title>
+        <script src="../artTemplate.js"></script>
+        <style>
+            
+        </style>
+    </head>
+    <body>
+        
+        <div id="content"></div>
+
+        
+
+        <script>
+
+            template.helper('price_id',function(aPrice){
+            var str = 0
+
+            if(aPrice == 0){
+                str = "免费"
+            }
+            else{
+                str = "￥" +　aPrice.toFixed(2)
+            }
+            return str
+            })
+            template.helper('date_id',function(aDate){
+
+                var Y = aDate.getFullYear()
+
+                var M = aDate.getMonth() + 1
+
+                var D = aDate.getDate()
+
+                M = M < 10 ? '0' + M : M
+
+                D = D < 10 ? '0' + D : D
+
+                return `${Y}-${M}-${D}`
+
+                return `${Y}年${M}月${D}日`
+            })
+
+
+
+
+        </script>
+            <script id="template" type="text/html">
+                <h4> {{title}} </h4>
+                    <ul>
+                        {{each books as aBook}}
+                        <li>
+                            <p> {{aBook.name }} </p>  
+                             <del> {{aBook.validatePrice | price_id}} </del>
+                             <span> {{aBook.currentPrice | price_id}} </span>
+                             <br>
+                             <span> {{aBook.publishDate | date_id}} </span>
+                             </li>
+                        {{/each}}
+                    </ul>
+            
+            </script>
+
+
+
+
+    <script type="text/javascript">
+        var data = {
+			title:'推荐书籍',
+			books:[
+				{
+					name:'HTML5 CSS3权威指南',
+					validatePrice:125,
+					currentPrice:98.5,
+					publishDate:new Date('2015-04-09')
+				},
+				{
+					name:'HTML5 JavaScript权威指南',
+					validatePrice:185,
+					currentPrice:108.5,
+					publishDate:new Date('2015-05-08')
+				},
+				{
+					name:'ES6 入门',
+					validatePrice:135,
+					currentPrice:95,
+					publishDate:new Date('2015-03-09')
+				}
+			]
+		}
+
+        var html = template('template',data)
+
+        document.querySelector("#content").innerHTML = html
+
+    </script>
+    </body>
+</html>
